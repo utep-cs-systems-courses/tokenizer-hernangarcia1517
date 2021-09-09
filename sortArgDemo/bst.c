@@ -54,6 +54,7 @@ void bstInsert(BstNode **rootp, char *str)
 void
 bstPrint(BstNode *root)		/* in order */
 {
+  printf("hi");
   if (root == NULL) return;
   bstPrint(root->children[0]);
   puts(root->str);
