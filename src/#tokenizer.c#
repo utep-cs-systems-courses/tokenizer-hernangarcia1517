@@ -125,4 +125,6 @@ int main(char args)
 
   printf("Output: \n");
   print_tokens(tokenize(userInput));
+
+  
 }
