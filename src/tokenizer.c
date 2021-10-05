@@ -4,7 +4,7 @@
 
 int space_char(char c)
 {
-  if(c == ' ' || c == '\t' || c == '\n')
+  if(c == ' ' || c == '\t')
   {
     return 1;
   }
@@ -13,12 +13,11 @@ int space_char(char c)
 
 int non_space_char(char c)
 {
-  int space_char_value = space_char(c);
-  if(space_char_value == 1)
+  if(c != ' ' && c != '\t')
   {
-    return 0;
+    return 1;
   }
-  return 1;
+  return 0;
 }
 
 char *word_start(char *str)
@@ -53,7 +52,8 @@ char *word_end(char *str)
 int count_words(char *str)
 {
   int n = 0;
-  for(int i = 0; str[i] != '\0'; i++)
+  int i = 0;
+  for(; str[i] != '\0'; i++)
   {
     if(str[i] == ' ')
     {
@@ -74,23 +74,19 @@ char *copy_str(char *inStr, short len)
     outStr[i] = inStr[i];
   }
   outStr[i] = '\0';
+  
   return outStr;
 }
 
-void free_tokens(char **word)
+void free_tokens(char **tokens)
 {
-  int i = 0;
-  while(word[i] != NULL)
-  {
-    free(word[i]);
-    i++;
-  }
-  free(word);
+  free(tokens);
 }
 
 void print_tokens(char **tokens)
 {
-  for(int i = 0; tokens[i] != NULL; i++)
+  int i = 0;
+  for(; tokens[i] != NULL; i++)
   {
     printf("%s\n", tokens[i]);
   }
@@ -111,7 +107,7 @@ char **tokenize(char* str)
 
     tokens[i] = copy_str(start, end - start);
   }
-  tokens[i] == NULL;
+  tokens[i] = NULL;
   
   return tokens;
 }
@@ -124,5 +120,9 @@ int main(char args)
   printf("\n");
 
   printf("Output: \n");
-  print_tokens(tokenize(userInput));
+
+  char **tokens = tokenize(userInput);
+  print_tokens(tokens);
+
+  free_tokens(tokens);
 }
