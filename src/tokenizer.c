@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tokenizer.h"
+#include "history.c"
 
 int space_char(char c)
 {
@@ -112,42 +113,30 @@ char **tokenize(char* str)
   return tokens;
 }
 
-List *init_history()
-{
-  List *history;
-}
-
-void print_history(List *list)
-{
-  printf("print history");
-}
-
-void free_history(List *list)
-{
-  printf("free history");
-}
-
-void addhistory(List *list, char *str)
-{
-  printf("add history");
-}
-
-char *get_history(List *list, int id)
-{
-  printf("get history");
-}
-
 int main(char args)
 {
-  char userInput[64];
-  printf("Enter strings to tokenize: (40 characters max)\n");
-  fgets(userInput, 64, stdin); // stdin is standard input, fgets comes from stdio
-  printf("\n");
+  int hist_id;
+  char *hist_item;
+  List *history = init_history(); // initializing history
+  char userStart[3];
+  printf("Start? [y, n]\n");
+  fgets(userStart, 3, stdin);
+  while(userStart[0] == 'y')
+  {
+    char userInput[64];
+    printf("Enter strings to tokenize: (40 characters max)\n");
+    fgets(userInput, 64, stdin); // stdin is standard input, fgets comes from stdio
+    printf("\n");
+    add_history(history, userInput);
+    
+    printf("Output: \n");
 
-  printf("Output: \n");
+    char **tokens = tokenize(userInput);
+    print_tokens(tokens);
 
-  char **tokens = tokenize(userInput);
-  print_tokens(tokens);
-
-  free_tokens(tokens);
+    free_tokens(tokens);
+    printf("Continue? [y, n]\n");
+    fgets(userStart, 3, stdin);
+  }
+  print_history(history);
 }

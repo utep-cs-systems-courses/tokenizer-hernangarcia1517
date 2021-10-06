@@ -4,34 +4,34 @@
 
 List* init_history()
 {
-  List history;
-  history = (List) malloc(sizeof(List));
+  List *history;
+  history = (List*) malloc(sizeof(List));
   history->root = NULL;
   return history;
 }
 
 void add_history(List *list, char *str)
 {
-  Node new = (Node) malloc(sizeof(Node));
+  Item *newItem = (Item*) malloc(sizeof(Item));
+  // add string to linked list
+  newItem->str = str;
+  newItem->next = NULL;
 
   if(list->root == NULL)
   {
-    new->id = 1;
-    list->root = new;
+    newItem->id = 1;
+    list->root = newItem;
   }
   else
   {
-    Node currentNode = list->root;
-    while(currentNode->next != NULL)
+    Item *currentItem = list->root;
+    while(currentItem->next != NULL)
     {
-      currentNode = currentNode->next;
+      currentItem = currentItem->next;
     }
-    new->id = currentNode->id+1;
-    currentNode->next = new;
+    newItem->id = currentItem->id+1;
+    currentItem->next = newItem;
   }
-  // add string to linked list
-  new->str = str;
-  new->next = NULL;
 }
 
 char *get_history(List *list, int id)
@@ -42,7 +42,7 @@ char *get_history(List *list, int id)
   }
   else
   {
-    Node* temp = list->root;
+    Item* temp = list->root;
     while(temp != NULL)
     {
       if(temp->id == id)
@@ -56,7 +56,7 @@ char *get_history(List *list, int id)
 
 void print_history(List *list)
 {
-  Node* temp = (list->root);
+  Item *temp = (list->root);
   while(temp != NULL)
   {
     printf("history working: %s\n", temp->str);
@@ -66,4 +66,14 @@ void print_history(List *list)
 
 void free_history(List *list)
 {
+  Item *temp;
+  Item *temp2;
+  temp2 = list->root;
+  while(temp2 != NULL)
+  {
+    temp = temp2;
+    temp2 = temp2->next;
+    free(temp);
+  }
+  free(list);
 }
