@@ -112,6 +112,31 @@ char **tokenize(char* str)
   return tokens;
 }
 
+List *init_history()
+{
+  List *history;
+}
+
+void print_history(List *list)
+{
+  printf("print history");
+}
+
+void free_history(List *list)
+{
+  printf("free history");
+}
+
+void addhistory(List *list, char *str)
+{
+  printf("add history");
+}
+
+char *get_history(List *list, int id)
+{
+  printf("get history");
+}
+
 int main(char args)
 {
   char userInput[64];
