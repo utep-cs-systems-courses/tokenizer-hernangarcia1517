@@ -20,7 +20,7 @@ int non_space_char(char c)
   }
   return 0;
 }
-
+/*
 char *word_start(char *str)
 {
   int i = 0;
@@ -46,10 +46,9 @@ char *word_end(char *str)
       return &str[i - 1];
     }
   }
-
   return &str[i];
 }
-
+*/
 int count_words(char *str)
 {
   int n = 0;
@@ -65,7 +64,7 @@ int count_words(char *str)
   
   return n;
 }
-
+/*
 char *copy_str(char *inStr, short len)
 {
   char *outStr = malloc((len) * sizeof(char));
@@ -78,7 +77,7 @@ char *copy_str(char *inStr, short len)
   
   return outStr;
 }
-
+*/
 void free_tokens(char **tokens)
 {
   free(tokens);
@@ -138,5 +137,7 @@ int main(char args)
     printf("Continue? [y, n]\n");
     fgets(userStart, 3, stdin);
   }
+  
+  
   print_history(history);
 }

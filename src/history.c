@@ -1,6 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "history.h"
+
+char *word_start(char *str)
+{
+  int i = 0;
+  for(; space_char(str[i]) == 1; i++)
+  {
+    if(str[i] == '\0')
+    {
+      return NULL;
+    }
+  }
+
+  return &str[i]; // return the pointer to start
+}
+
+char *word_end(char *str)
+{
+  str = word_start(str);
+  int i = 0;
+  for(; non_space_char(str[i]) == 1; i++)
+  {
+    if(str[i] == '\0')
+    {
+      return &str[i - 1];
+    }
+  }
+
+  return &str[i];
+}
+
+char *copy_str(char *inStr, short len)
+{
+  char *outStr = malloc((len) * sizeof(char));
+  int i = 0;
+  for(; i < len; i++)
+  {
+    outStr[i] = inStr[i];
+  }
+  outStr[i] = '\0';
+  
+  return outStr;
+}
 
 List* init_history()
 {
@@ -12,9 +55,13 @@ List* init_history()
 
 void add_history(List *list, char *str)
 {
+  char *start = str;
+  char *end = str;
+  start = word_start(end);
+  end = word_end(start);
   Item *newItem = (Item*) malloc(sizeof(Item));
   // add string to linked list
-  newItem->str = str;
+  newItem->str = copy_str(start, end - start);
   newItem->next = NULL;
 
   if(list->root == NULL)
